@@ -37,6 +37,8 @@ dependencies:
   image_picker: ^1.1.2
   provider: ^6.1.2
   http: ^1.2.1
+  introduction_screen: ^4.0.0
+  shared_preferences: ^2.1.1
 
 dev_dependencies:
   flutter_test:
@@ -59,6 +61,15 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  # Aplikasi menggunakan logo yang disimpan di folder assets/images
+  assets:
+    - assets/images/ecoscan.png
+    - assets/images/benar.png
+    - assets/images/salah1.png
+    - assets/images/salah2.png
+    - assets/images/salah3.png
+    - assets/images/salah4.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

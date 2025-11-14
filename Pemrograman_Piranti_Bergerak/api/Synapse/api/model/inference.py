@@ -60,63 +60,45 @@ class Model:
 
     def predict_from_image(self, image_file):
         '''
-        Preprocessing untuk model klasifikasi gambar:
-        - Convert ke RGB
-        - Resize ke (128, 128)
-        - Rescale pixel ke rentang [0,1] (1./255)
+        Melakukan prediksi klasifikasi sampah dari gambar menjadi kategori organik atau non-organik.
+        
+        Preprocessing yang dilakukan:
+        - Konversi ke format RGB
+        - Resize gambar ke ukuran (128, 128) piksel
+        - Normalisasi nilai pixel ke rentang [0,1]
 
-        Fungsi menerima path file, PIL Image instance, atau numpy array (mis. hasil cv2.imread).
-        Return: dict dengan key 'label' berisi 'organik' atau 'non-organik'.
+        Args:
+            image_file: Path file gambar, PIL Image instance, atau numpy array
+            
+        Returns:
+            str: Label hasil prediksi berupa 'organik' atau 'non-organik'
         '''
-        # --- Load/normalize image ---
+        # Load dan normalisasi gambar
         if isinstance(image_file, np.ndarray):
-            # Convert numpy array to PIL Image
-            # Assume BGR format from cv2.imread, convert to RGB
+            # Konversi numpy array ke PIL Image
+            # Jika array 3 channel, asumsikan format BGR dan konversi ke RGB
             if image_file.ndim == 3 and image_file.shape[2] == 3:
-                # BGR to RGB conversion
-                img_rgb = image_file[:, :, ::-1]  # Reverse last dimension
+                # Konversi BGR ke RGB
+                img_rgb = image_file[:, :, ::-1]  # Balik urutan channel terakhir
                 img = Image.fromarray(img_rgb.astype('uint8'))
             else:
                 img = Image.fromarray(image_file.astype('uint8'))
         elif isinstance(image_file, Image.Image):
             img = image_file
         else:
-            # path-like
+            # Input berupa path file
             img = Image.open(image_file)
 
-        # Convert to RGB and resize using PIL
+        # Konversi ke RGB dan resize menggunakan PIL
         img = img.convert('RGB')
         img = img.resize((128, 128), Image.LANCZOS)
         
-        # Convert to numpy array and normalize
+        # Konversi ke numpy array dan normalisasi
         img_array = np.array(img).astype('float32') / 255.0
-        image_array = np.expand_dims(img_array, axis=0)  # shape (1,128,128,3)
+        image_array = np.expand_dims(img_array, axis=0)  # Bentuk (1,128,128,3)
 
-        # --- Keras model ---
-        if self.model_type == 'keras':
-            prediction = self.model.predict(image_array)
-            prediction = np.array(prediction)
-
-            # Binary sigmoid output
-            if prediction.ndim == 2 and prediction.shape[1] == 1:
-                prob = float(prediction[0][0])
-                label = 'organik' if prob >= 0.5 else 'non-organik'
-                return label
-
-            # Softmax two-output
-            if prediction.ndim == 2 and prediction.shape[1] == 2:
-                probs = prediction[0]
-                label = 'organik' if probs[1] >= probs[0] else 'non-organik'
-                return label
-
-            # Fallback: argmax
-            flat = prediction.flatten()
-            idx = int(np.argmax(flat))
-            label = 'organik' if idx == 1 else 'non-organik'
-            return label
-
-        # --- TensorFlow Lite model ---
-        elif self.model_type == 'tflite':
+        # Prediksi menggunakan model TensorFlow Lite
+        if self.model_type == 'tflite':
             input_details = self.model.get_input_details()
             output_details = self.model.get_output_details()
 
@@ -124,8 +106,10 @@ class Model:
             quant = input_details[0].get('quantization', (0.0, 0))
             scale, zero_point = quant
 
+            # Persiapan data sesuai dengan tipe input model
             img_for_model = image_array
             if scale and scale != 0:
+                # Terapkan kuantisasi jika diperlukan
                 img_for_model = (image_array / scale + zero_point).astype(inp_dtype)
             else:
                 img_for_model = image_array.astype(inp_dtype)
@@ -135,23 +119,28 @@ class Model:
             prediction = self.model.get_tensor(output_details[0]['index'])
             prediction = np.array(prediction)
 
+            # Binary classification dengan sigmoid output
+            # Berdasarkan training: O (Organic) = 0, R (Recyclable) = 1
+            # Output sigmoid: < 0.5 = Organic, >= 0.5 = Recyclable
             if prediction.ndim == 2 and prediction.shape[1] == 1:
                 prob = float(prediction[0][0])
-                label = 'organik' if prob >= 0.5 else 'non-organik'
+                label = 'organik' if prob < 0.5 else 'non-organik'
                 return label
 
+            # Untuk softmax dengan 2 output
             if prediction.ndim == 2 and prediction.shape[1] == 2:
                 probs = prediction[0]
-                label = 'organik' if probs[1] >= probs[0] else 'non-organik'
+                label = 'organik' if probs[0] > probs[1] else 'non-organik'
                 return label
 
+            # Untuk argmax approach
             flat = prediction.flatten()
             idx = int(np.argmax(flat))
-            label = 'organik' if idx == 1 else 'non-organik'
+            label = 'organik' if idx == 0 else 'non-organik'
             return label
 
         else:
-            raise ValueError("This method is only supported for Keras and TensorFlow Lite models.")
+            raise ValueError("This method is only supported for TensorFlow Lite models.")
 
     def predict_from_data(self, data, numerical_features=None):
         '''

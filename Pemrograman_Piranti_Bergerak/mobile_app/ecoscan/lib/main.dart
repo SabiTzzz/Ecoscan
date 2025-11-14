@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'page/intro_screen.dart';
 import 'controller/controller.dart';
 import 'page/aboutapp.dart';
 import 'page/hasildeteksi.dart';
@@ -21,6 +23,8 @@ class EcoScanApp extends StatefulWidget {
 
 class _EcoScanAppState extends State<EcoScanApp> {
   ThemeMode _themeMode = ThemeMode.light;
+  bool _initialized = false;
+  bool _showIntro = false;
 
   void _toggleTheme() {
     setState(() {
@@ -32,14 +36,62 @@ class _EcoScanAppState extends State<EcoScanApp> {
 
   @override
   Widget build(BuildContext context) {
+    // Use a friendly green palette and explicit surface/background colors
+    // Light: white surface with a pleasant green primary
+    // Dark: black surface with a brighter green accent for contrast
+  // Brighter greens chosen for stronger, friendlier accent
+  const Color lightGreen = Color(0xFF4CAF50); // Material Green 500 (brighter)
+  // Use user-requested darker green for dark mode
+  const Color darkGreen = Color(0xFF2F6542); // #2f6542
+
     final lightColorScheme = ColorScheme.fromSeed(
-      seedColor: const Color(0xFF8AB08A),
+      seedColor: lightGreen,
       brightness: Brightness.light,
+    ).copyWith(
+      primary: lightGreen,
+      onPrimary: Colors.white,
+      primaryContainer: lightGreen.withOpacity(0.12),
+      surface: Colors.white,
+      background: Colors.white,
+      onSurface: Colors.black87,
+      onBackground: Colors.black87,
+      secondary: lightGreen,
     );
+
     final darkColorScheme = ColorScheme.fromSeed(
-      seedColor: const Color(0xFF404940),
+      seedColor: const Color.fromARGB(255, 33, 92, 53),
       brightness: Brightness.dark,
+    ).copyWith(
+      primary: darkGreen,
+      // ensure text/icons on primary are light for contrast
+      onPrimary: Colors.white,
+      primaryContainer: darkGreen.withOpacity(0.24),
+  // use the user-provided near-black background (updated)
+  surface: const Color(0xFF172B23), // #172b23
+  background: const Color(0xFF172B23),
+      onSurface: Colors.white,
+      onBackground: Colors.white,
+      secondary: const Color(0xFF388E3C),
     );
+    // pilih halaman home berdasarkan status inisialisasi dan flag intro
+    Widget homeWidget;
+    if (!_initialized) {
+      homeWidget = Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    } else if (_showIntro) {
+      homeWidget = IntroScreenPage(onFinish: () async {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('seenIntro', true);
+        if (mounted) setState(() => _showIntro = false);
+      });
+    } else {
+      homeWidget = EcoScanHome(
+        onToggleTheme: _toggleTheme,
+        isDarkMode: _themeMode == ThemeMode.dark,
+      );
+    }
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'EcoScan',
@@ -49,10 +101,10 @@ class _EcoScanAppState extends State<EcoScanApp> {
         colorScheme: lightColorScheme,
         textTheme: const TextTheme(
           headlineMedium: TextStyle(fontSize: 50, fontWeight: FontWeight.w600),
-          bodyMedium: TextStyle(fontSize: 12.5, height: 1.2),
+          bodyMedium: TextStyle(fontSize: 12.5, height: 0),
           labelLarge: TextStyle(
             fontWeight: FontWeight.w600,
-            color: Colors.black87,
+            color: Colors.white,
           ),
         ),
       ),
@@ -61,15 +113,39 @@ class _EcoScanAppState extends State<EcoScanApp> {
         colorScheme: darkColorScheme,
         textTheme: const TextTheme(
           headlineMedium: TextStyle(fontSize: 50, fontWeight: FontWeight.w600),
-          bodyMedium: TextStyle(fontSize: 12.5, height: 1.2),
+          bodyMedium: TextStyle(fontSize: 12.5, height: 0),
           labelLarge: TextStyle(fontWeight: FontWeight.w600),
         ),
       ),
-      home: EcoScanHome(
-        onToggleTheme: _toggleTheme,
-        isDarkMode: _themeMode == ThemeMode.dark,
-      ),
+      home: homeWidget,
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadIntroFlag();
+  }
+
+  Future<void> _loadIntroFlag() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final seen = prefs.getBool('seenIntro') ?? false;
+      if (mounted) {
+        setState(() {
+          _showIntro = !seen;
+          _initialized = true;
+        });
+      }
+    } catch (e) {
+      // jika gagal membaca prefs, tetap lanjut ke home
+      if (mounted) {
+        setState(() {
+          _showIntro = false;
+          _initialized = true;
+        });
+      }
+    }
   }
 }
 
@@ -138,7 +214,7 @@ class EcoScanHome extends StatelessWidget {
                   // TOMBOL PILIH GAMBAR
                   FilledButton.tonal(
                     style: FilledButton.styleFrom(
-                      backgroundColor: cs.primaryContainer,
+                      backgroundColor: cs.primary,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 20,
                         vertical: 12,
@@ -162,7 +238,7 @@ class EcoScanHome extends StatelessWidget {
                         builder: (context) => EcoBottomSheet(),
                       );
                     },
-                    child: const Text('Pilih Gambar'),
+                    child: Text('Pilih Gambar', style: TextStyle(color: cs.onPrimary,)),
                   ),
                   const SizedBox(height: 30),
                   // KARTU PANDUAN
@@ -171,16 +247,191 @@ class EcoScanHome extends StatelessWidget {
                       'Panduan Penggunaan',
                       style: Theme.of(context).textTheme.labelLarge?.copyWith(
                         fontWeight: FontWeight.w700,
-                        fontSize: 14.5,
+                        fontSize: 16.5,
                       ),
                     ),
-                    accent: cs.primaryContainer,
-                    children: const [
-                      _PreviewArea(),
-                      SizedBox(height: 10),
-                      _DividerShort(),
-                      SizedBox(height: 6),
-                      _StepsGrid(),
+                    accent: cs.primary,
+                    children: [
+                      // Top correct image
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.asset(
+                          'assets/images/benar.png',
+                          height: 170,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) => _PreviewArea(),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Center(
+                        child: Text(
+                          'Hindari contoh kesalahan berikut:',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+
+                      // Grid of bad examples
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              children: [
+                                Stack(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: Image.asset(
+                                        'assets/images/salah1.png',
+                                        height: 80,
+                                        width: double.infinity,
+                                        fit: BoxFit.cover,
+                                        errorBuilder: (context, error, stackTrace) => Container(height: 80, color: Colors.grey.shade200),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      right: 6,
+                                      top: 6,
+                                      child: Container(
+                                        width: 22,
+                                        height: 22,
+                                        decoration: BoxDecoration(
+                                          color: Colors.redAccent,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: const Center(
+                                          child: Icon(Icons.close, size: 14, color: Colors.white),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 6),
+                                Text('Banyak jenis sampah', style: Theme.of(context).textTheme.bodyMedium),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Column(
+                              children: [
+                                Stack(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: Image.asset(
+                                        'assets/images/salah2.png',
+                                        height: 80,
+                                        width: double.infinity,
+                                        fit: BoxFit.cover,
+                                        errorBuilder: (context, error, stackTrace) => Container(height: 80, color: Colors.grey.shade200),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      right: 6,
+                                      top: 6,
+                                      child: Container(
+                                        width: 22,
+                                        height: 22,
+                                        decoration: BoxDecoration(
+                                          color: Colors.redAccent,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: const Center(
+                                          child: Icon(Icons.close, size: 14, color: Colors.white),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 6),
+                                Text('Terlalu gelap', style: Theme.of(context).textTheme.bodyMedium),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              children: [
+                                Stack(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: Image.asset(
+                                        'assets/images/salah3.png',
+                                        height: 80,
+                                        width: double.infinity,
+                                        fit: BoxFit.cover,
+                                        errorBuilder: (context, error, stackTrace) => Container(height: 80, color: Colors.grey.shade200),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      right: 6,
+                                      top: 6,
+                                      child: Container(
+                                        width: 22,
+                                        height: 22,
+                                        decoration: BoxDecoration(
+                                          color: Colors.redAccent,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: const Center(
+                                          child: Icon(Icons.close, size: 14, color: Colors.white),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 6),
+                                Text('Terlalu jauh', style: Theme.of(context).textTheme.bodyMedium),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Column(
+                              children: [
+                                Stack(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: Image.asset(
+                                        'assets/images/salah4.png',
+                                        height: 80,
+                                        width: double.infinity,
+                                        fit: BoxFit.cover,
+                                        errorBuilder: (context, error, stackTrace) => Container(height: 80, color: Colors.grey.shade200),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      right: 6,
+                                      top: 6,
+                                      child: Container(
+                                        width: 22,
+                                        height: 22,
+                                        decoration: BoxDecoration(
+                                          color: Colors.redAccent,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: const Center(
+                                          child: Icon(Icons.close, size: 14, color: Colors.white),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 6),
+                                Text('Buram', style: Theme.of(context).textTheme.bodyMedium),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ],
@@ -193,11 +444,6 @@ class EcoScanHome extends StatelessWidget {
   }
 }
 
-/* === Komponen Kecil === */
-
-// _CircleIconButton, _GuideCard, _PreviewArea, _DividerShort, _StepsGrid
-// TIDAK ADA PERUBAHAN DI SINI
-// ... (salin semua widget _CircleIconButton s/d _StepsGrid dari kode lama Anda)
 class _CircleIconButton extends StatelessWidget {
   final IconData icon;
   final VoidCallback onTap;
@@ -238,7 +484,7 @@ class _GuideCard extends StatelessWidget {
         children: [
           // Header title
           Center(child: title),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
           // Inner white panel
           Container(
             decoration: BoxDecoration(
@@ -339,10 +585,8 @@ class _StepsGrid extends StatelessWidget {
     );
   }
 }
-// --- Akhir dari komponen yang tidak berubah ---
 
 class EcoBottomSheet extends StatelessWidget {
-  // MODIFIKASI: Hapus const
   EcoBottomSheet({super.key});
 
   // MODIFIKASI: Logika _pickImage diganti total
@@ -358,20 +602,12 @@ class EcoBottomSheet extends StatelessWidget {
     if (context.mounted) {
       navigator.pop(); // Tutup bottom sheet
 
+      // Jika ada gambar, langsung navigasi ke halaman hasil.
+      // HasilDeteksi akan menjalankan prediksi dan menampilkan loading.
       if (provider.imageFile != null) {
-        try {
-          // 4. Panggil predictImage dan tunggu hasil
-          final success = await provider.predictImage();
-
-          // 5. Jika berhasil, navigasi ke halaman hasil
-          if (success && provider.predictionMessage != null) {
-            navigator.push(
-              MaterialPageRoute(builder: (context) => const HasilDeteksi()),
-            );
-          }
-        } catch (e) {
-          // Jika ada error, abaikan saja (error sudah di-handle di controller)
-        }
+        navigator.push(
+          MaterialPageRoute(builder: (context) => const HasilDeteksi()),
+        );
       }
     }
   }
