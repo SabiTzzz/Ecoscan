@@ -257,7 +257,7 @@ class EcoScanHome extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8),
                         child: Image.asset(
                           'assets/images/benar.png',
-                          height: 170,
+                          height: 185,
                           width: double.infinity,
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) => _PreviewArea(),
@@ -284,27 +284,13 @@ class EcoScanHome extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(8),
                                       child: Image.asset(
                                         'assets/images/salah1.png',
-                                        height: 80,
+                                        height: 90,
                                         width: double.infinity,
                                         fit: BoxFit.cover,
                                         errorBuilder: (context, error, stackTrace) => Container(height: 80, color: Colors.grey.shade200),
                                       ),
                                     ),
-                                    Positioned(
-                                      right: 6,
-                                      top: 6,
-                                      child: Container(
-                                        width: 22,
-                                        height: 22,
-                                        decoration: BoxDecoration(
-                                          color: Colors.redAccent,
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: const Center(
-                                          child: Icon(Icons.close, size: 14, color: Colors.white),
-                                        ),
-                                      ),
-                                    ),
+                                    
                                   ],
                                 ),
                                 const SizedBox(height: 6),
@@ -322,27 +308,13 @@ class EcoScanHome extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(8),
                                       child: Image.asset(
                                         'assets/images/salah2.png',
-                                        height: 80,
+                                        height: 90,
                                         width: double.infinity,
                                         fit: BoxFit.cover,
                                         errorBuilder: (context, error, stackTrace) => Container(height: 80, color: Colors.grey.shade200),
                                       ),
                                     ),
-                                    Positioned(
-                                      right: 6,
-                                      top: 6,
-                                      child: Container(
-                                        width: 22,
-                                        height: 22,
-                                        decoration: BoxDecoration(
-                                          color: Colors.redAccent,
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: const Center(
-                                          child: Icon(Icons.close, size: 14, color: Colors.white),
-                                        ),
-                                      ),
-                                    ),
+                                    
                                   ],
                                 ),
                                 const SizedBox(height: 6),
@@ -364,27 +336,13 @@ class EcoScanHome extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(8),
                                       child: Image.asset(
                                         'assets/images/salah3.png',
-                                        height: 80,
+                                        height: 90,
                                         width: double.infinity,
                                         fit: BoxFit.cover,
                                         errorBuilder: (context, error, stackTrace) => Container(height: 80, color: Colors.grey.shade200),
                                       ),
                                     ),
-                                    Positioned(
-                                      right: 6,
-                                      top: 6,
-                                      child: Container(
-                                        width: 22,
-                                        height: 22,
-                                        decoration: BoxDecoration(
-                                          color: Colors.redAccent,
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: const Center(
-                                          child: Icon(Icons.close, size: 14, color: Colors.white),
-                                        ),
-                                      ),
-                                    ),
+                                    
                                   ],
                                 ),
                                 const SizedBox(height: 6),
@@ -402,27 +360,13 @@ class EcoScanHome extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(8),
                                       child: Image.asset(
                                         'assets/images/salah4.png',
-                                        height: 80,
+                                        height: 90,
                                         width: double.infinity,
                                         fit: BoxFit.cover,
                                         errorBuilder: (context, error, stackTrace) => Container(height: 80, color: Colors.grey.shade200),
                                       ),
                                     ),
-                                    Positioned(
-                                      right: 6,
-                                      top: 6,
-                                      child: Container(
-                                        width: 22,
-                                        height: 22,
-                                        decoration: BoxDecoration(
-                                          color: Colors.redAccent,
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: const Center(
-                                          child: Icon(Icons.close, size: 14, color: Colors.white),
-                                        ),
-                                      ),
-                                    ),
+                                    
                                   ],
                                 ),
                                 const SizedBox(height: 6),
