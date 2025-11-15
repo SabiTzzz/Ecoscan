@@ -1,4 +1,4 @@
-# EcoScan
+# EcoScan: Klasifikasi Jenis Sampah Organik atau Non-organik menggunakan Metode CNN
 
 <p align="center">
   <img src="Pemrograman_Piranti_Bergerak/mobile_app/ecoscan/assets/images/ecoscan.png" alt="EcoScan Logo" width="180" />
