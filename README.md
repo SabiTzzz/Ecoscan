@@ -66,7 +66,13 @@ conda env create -n ecoscan -f environment.yml
 conda activate ecoscan
 ```
 
-### 4. Jalankan Server Django
+### 4. Perbarui Library Tensorflow
+
+```bash
+pip install --upgrade tensorflow
+```
+
+### 5. Jalankan Server Django
 
 ```bash
 python manage.py runserver
@@ -74,7 +80,7 @@ python manage.py runserver
 
 Server akan berjalan di `http://127.0.0.1:8000`
 
-### 5. Setup LocalTunnel
+### 6. Setup LocalTunnel
 
 Untuk mengakses API dari perangkat mobile, gunakan LocalTunnel:
 
