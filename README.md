@@ -21,16 +21,16 @@
 
 ##  Daftar Isi
 
-- [Daftar Isi](#-daftar-isi)
-- [Tentang Aplikasi](#-tentang-aplikasi)
-- [Fitur Utama](#-fitur-utama)
-- [Kebutuhan](#-kebutuhan)
-- [Konfigurasi API](#-konfigurasi-api)
-- [Konfigurasi Aplikasi Mobile](#-konfigurasi-aplikasi-mobile)
-- [Cara Menggunakan Aplikasi](#-cara-menggunakan-aplikasi)
-- [Aplikasi Ecoscan](#-aplikasi-ecoscan)
-- [Anggota Kelompok](#-anggota-kelompok)
-- [Dataset](#-dataset)
+- [Daftar Isi](#daftar-isi)
+- [Tentang Aplikasi](#tentang-aplikasi)
+- [Fitur Utama](#fitur-utama)
+- [Kebutuhan](#kebutuhan)
+- [Konfigurasi API](#konfigurasi-api)
+- [Konfigurasi Aplikasi Mobile](#konfigurasi-aplikasi-mobile)
+- [Cara Menggunakan Aplikasi](#cara-menggunakan-aplikasi)
+- [Aplikasi Ecoscan](#aplikasi-ecoscan)
+- [Anggota Kelompok](#anggota-kelompok)
+- [Dataset](#dataset)
 
 ---
 
@@ -188,8 +188,6 @@ flutter run
 - **HTTP** - API communication
 - **Provider** - State management untuk API
 - **Shared Preferences** - Intro Screen
-
----
 
 ---
 
