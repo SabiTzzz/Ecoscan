@@ -138,13 +138,9 @@ Pada halaman ini pengguna akan diperkenalkan secara singkat tentang EcoScan, mul
 
 ### 2. **Halaman Utama**
 
-<img src="screenshots/home_screen.png" width="250" alt="Home Screen">
-
 Halaman ini akan menampilkan fitur utama untuk memilih gambar yang akan diklasifikasi, kemudian ada panduan dalam pengambilan/pemilihan gambar yang benar, dan beberapa fitur sederhana seperti ganti tema dan penjelasan lebih lengkap tentang aplikasi EcoScan
 
 ### 3. **Ambil Foto dengan Kamera**
-
-<img src="screenshots/camera_screen.png" width="250" alt="Camera Screen">
 
 1. Tap tombol **"Ambil Foto"** atau ikon kamera
 2. Arahkan kamera ke sampah yang ingin diklasifikasikan
@@ -153,15 +149,11 @@ Halaman ini akan menampilkan fitur utama untuk memilih gambar yang akan diklasif
 
 ### 4. **Upload dari Galeri**
 
-<img src="screenshots/gallery_screen.png" width="250" alt="Gallery Screen">
-
 1. Tap tombol **"Pilih dari Galeri"** atau ikon galeri
 2. Pilih foto sampah dari galeri perangkat Anda
 3. Konfirmasi pilihan foto
 
 ### 5. **Hasil Klasifikasi**
-
-<img src="screenshots/result_screen.png" width="250" alt="Result Screen">
 
 - Aplikasi akan menampilkan hasil klasifikasi:
   - **Kategori**: Organik atau Non-Organik
