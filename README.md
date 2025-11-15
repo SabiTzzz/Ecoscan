@@ -169,7 +169,7 @@ Halaman ini akan menampilkan fitur utama untuk memilih gambar yang akan diklasif
 
 ## Aplikasi Ecoscan
 
-- Link aplikasi: [google drive](link isi disini)
+- Link aplikasi: [File Aplikasi](https://drive.google.com/file/d/1icw7GU-IzLAe5kApLrvCzFDRjyMqtpoq/view?usp=sharing)
 
 ### API
 - **Django** - API framework
