@@ -198,20 +198,17 @@ class EcoScanHome extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 20),
-                  // JUDUL
                   Text(
                     'EcoScan',
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
                   const SizedBox(height: 30),
-                  // DESKRIPSI
                   Text(
                     'mengklasifikasikan sampah\norganik atau non organik',
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const SizedBox(height: 30),
-                  // TOMBOL PILIH GAMBAR
                   FilledButton.tonal(
                     style: FilledButton.styleFrom(
                       backgroundColor: cs.primary,
@@ -234,14 +231,12 @@ class EcoScanHome extends StatelessWidget {
                             top: Radius.circular(16),
                           ),
                         ),
-                        // MODIFIKASI: Hapus const
                         builder: (context) => EcoBottomSheet(),
                       );
                     },
                     child: Text('Pilih Gambar', style: TextStyle(color: cs.onPrimary,)),
                   ),
                   const SizedBox(height: 30),
-                  // KARTU PANDUAN
                   _GuideCard(
                     title: Text(
                       'Panduan Penggunaan',
@@ -252,7 +247,6 @@ class EcoScanHome extends StatelessWidget {
                     ),
                     accent: cs.primary,
                     children: [
-                      // Top correct image
                       ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: Image.asset(
