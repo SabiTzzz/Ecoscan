@@ -1,5 +1,5 @@
 name: ecoscan
-description: "A new Flutter project."
+description: "Aplikasi untuk mendeteksi jenis sampah dengan bantuan machine learning"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -69,7 +69,7 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-  # Aplikasi menggunakan logo yang disimpan di folder assets/images
+  # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/ecoscan.png
     - assets/images/benar.png
@@ -77,11 +77,6 @@ flutter:
     - assets/images/salah2.png
     - assets/images/salah3.png
     - assets/images/salah4.png
-
-  # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
