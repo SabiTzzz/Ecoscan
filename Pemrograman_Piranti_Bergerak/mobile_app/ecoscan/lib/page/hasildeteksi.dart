@@ -2,17 +2,47 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../controller/controller.dart';
 
-class HasilDeteksi extends StatelessWidget {
+class HasilDeteksi extends StatefulWidget {
   const HasilDeteksi({super.key});
+
+  @override
+  State<HasilDeteksi> createState() => _HasilDeteksiState();
+}
+
+class _HasilDeteksiState extends State<HasilDeteksi> {
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    // Run prediction after first frame so Provider is available
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _runPrediction();
+    });
+  }
+
+  Future<void> _runPrediction() async {
+    final provider = Provider.of<PredictionProvider>(context, listen: false);
+    // If there's no image, nothing to do
+    if (provider.imageFile == null) {
+      setState(() {
+        _isLoading = false;
+      });
+      return;
+    }
+
+    setState(() => _isLoading = true);
+    await provider.predictImage();
+    if (mounted) {
+      setState(() => _isLoading = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
-
-    // Dapatkan provider
     final provider = Provider.of<PredictionProvider>(context);
 
-    // Extract prediction type dari predictionMessage
     String getPredictionType() {
       if (provider.predictionMessage != null) {
         final message = provider.predictionMessage!.toLowerCase();
@@ -23,40 +53,38 @@ class HasilDeteksi extends StatelessWidget {
           return 'NON-ORGANIK';
         }
       }
-      return 'MEMPROSES...';
+      return _isLoading ? 'MEMPROSES...' : 'TIDAK DITEMUKAN';
     }
 
-    // Generate deskripsi berdasarkan hasil prediksi
     String getDescription() {
       final type = getPredictionType().toLowerCase();
       if (type == 'organik') {
         return 'Dari gambar yang anda berikan terdeteksi bahwa sampah tersebut adalah sampah organik';
       } else if (type == 'non-organik') {
         return 'Dari gambar yang anda berikan terdeteksi bahwa sampah tersebut adalah sampah non-organik';
+      } else if (_isLoading) {
+        return provider.predictionMessage ?? 'Sedang memproses gambar...';
       } else {
-        return 'Sedang memproses gambar...';
+        return provider.predictionMessage ?? 'Tidak ada hasil deteksi.';
       }
     }
 
-    return Scaffold(
-      backgroundColor: cs.surface,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: cs.onSurface),
-          onPressed: () {
-            provider.clear();
-            Navigator.pop(context);
-          },
+    return WillPopScope(
+      onWillPop: () async => !_isLoading,
+      child: Scaffold(
+        backgroundColor: cs.surface,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          // Remove the top-left back button per request
+          automaticallyImplyLeading: false,
         ),
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
               // Judul
               Text(
                 getPredictionType(),
@@ -130,16 +158,27 @@ class HasilDeteksi extends StatelessWidget {
 
               const Spacer(),
 
-              // Tombol Kembali
+              // Jika masih loading, tampilkan progress indicator
+              if (_isLoading) ...[
+                const SizedBox(height: 8),
+                const CircularProgressIndicator(),
+                const SizedBox(height: 20),
+              ],
+
+              // Tombol Kembali (disabled saat loading)
               SizedBox(
                 width: 160,
                 child: FilledButton(
-                  onPressed: () {
-                    provider.clear();
-                    Navigator.pop(context);
-                  },
+                  onPressed: _isLoading
+                      ? null
+                      : () {
+                          provider.clear();
+                          Navigator.pop(context);
+                        },
                   style: FilledButton.styleFrom(
-                    backgroundColor: cs.primaryContainer.withOpacity(0.8),
+                    backgroundColor: _isLoading
+                        ? cs.onSurface.withOpacity(0.12)
+                        : cs.primary,
                     padding: const EdgeInsets.symmetric(vertical: 14),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
@@ -150,7 +189,7 @@ class HasilDeteksi extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
-                      color: cs.onPrimary,
+                      color: _isLoading ? cs.onSurface.withOpacity(0.38) : cs.onPrimary,
                     ),
                   ),
                 ),
@@ -161,6 +200,9 @@ class HasilDeteksi extends StatelessWidget {
           ),
         ),
       ),
+    
+      )
     );
+    
   }
 }

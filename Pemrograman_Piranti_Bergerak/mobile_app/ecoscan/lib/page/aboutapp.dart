@@ -13,14 +13,10 @@ class AboutAppPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        // Pakai primary agar hijau terang di light, hijau gelap di dark (didefinisikan di main.dart)
-        backgroundColor: cs.primaryContainer,
-        // Gunakan warna ikon yang sesuai tema
+        backgroundColor: Colors.transparent,
+        automaticallyImplyLeading: false,
         foregroundColor: iconColor,
-        iconTheme: IconThemeData(color: iconColor),
-        actionsIconTheme: IconThemeData(color: iconColor),
         elevation: 0,
-        // biarkan title kosong — judul utama ada di body sesuai permintaan
       ),
       body: SafeArea(
         child: Align(
@@ -37,6 +33,7 @@ class AboutAppPage extends StatelessWidget {
                     'Tentang Aplikasi',
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.w700,
+                      fontSize: 24,
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -51,29 +48,30 @@ class AboutAppPage extends StatelessWidget {
                     'gambar ke server tanpa persetujuan pengguna. Harap gunakan aplikasi ini sebagai panduan; '
                     'hasil klasifikasi tidak menggantikan kebijakan atau aturan pengelolaan sampah setempat.',
                     textAlign: TextAlign.justify,
-                    style: Theme.of(context).textTheme.bodyMedium,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 16),
                   ),
 
                   const SizedBox(height: 24),
 
-                  // Logo aplikasi (fallback FlutterLogo jika tidak ada asset)
+                  // Logo aplikasi (pakai asset jika ada, fallback FlutterLogo)
                   Container(
                     width: 140,
                     height: 140,
                     decoration: BoxDecoration(
-                      color: cs.primaryContainer,
+                      color: Theme.of(context).colorScheme.surface,
                       borderRadius: BorderRadius.circular(20),
                     ),
                     alignment: Alignment.center,
                     child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: const [
-                          // Jika nanti ada asset logo, ganti dengan Image.asset('assets/logo.png')
-                          FlutterLogo(size: 72),
-                          SizedBox(height: 8),
-                        ],
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.asset(
+                        'assets/images/ecoscan.png',
+                        width: 120,
+                        height: 120,
+                        fit: BoxFit.contain,
+                        errorBuilder: (context, error, stackTrace) {
+                          return const FlutterLogo(size: 72);
+                        },
                       ),
                     ),
                   ),
@@ -84,6 +82,29 @@ class AboutAppPage extends StatelessWidget {
                   Text(
                     '© ${DateTime.now().year} EcoScan',
                     style: Theme.of(context).textTheme.labelSmall,
+                  ),
+                  const SizedBox(height: 24),
+                  // Tombol Kembali di bawah mirip HasilDeteksi
+                  SizedBox(
+                    width: 160,
+                    child: FilledButton(
+                      onPressed: () => Navigator.pop(context),
+                      style: FilledButton.styleFrom(
+                        backgroundColor: cs.primary,
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: Text(
+                        'Kembali',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: cs.onPrimary,
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
