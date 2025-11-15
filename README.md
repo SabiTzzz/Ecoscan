@@ -72,7 +72,7 @@ conda activate ecoscan
 python manage.py runserver
 ```
 
-Server akan berjalan di `http://localhost:8000`
+Server akan berjalan di `http://127.0.0.1:8000`
 
 ### 5. Setup LocalTunnel
 
@@ -199,6 +199,6 @@ Halaman ini akan menampilkan fitur utama untuk memilih gambar yang akan diklasif
 
 ## Dataset
 
-- Dataset sampah dari [kaggle]
+- Dataset sampah dari [kaggle](https://www.kaggle.com/datasets/techsash/waste-classification-data/data)
 
 ---
