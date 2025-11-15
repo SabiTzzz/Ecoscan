@@ -140,7 +140,7 @@ Pada halaman ini pengguna akan diperkenalkan secara singkat tentang EcoScan, mul
 
 <img src="screenshots/home_screen.png" width="250" alt="Home Screen">
 
-- Setelah membuka aplikasi, Anda akan melihat halaman utama dengan dua opsi utama
+Halaman ini akan menampilkan fitur utama untuk memilih gambar yang akan diklasifikasi, kemudian ada panduan dalam pengambilan/pemilihan gambar yang benar, dan beberapa fitur sederhana seperti ganti tema dan penjelasan lebih lengkap tentang aplikasi EcoScan
 
 ### 3. **Ambil Foto dengan Kamera**
 
@@ -165,8 +165,7 @@ Pada halaman ini pengguna akan diperkenalkan secara singkat tentang EcoScan, mul
 
 - Aplikasi akan menampilkan hasil klasifikasi:
   - **Kategori**: Organik atau Non-Organik
-  - **Tingkat Kepercayaan**: Persentase akurasi klasifikasi
-  - **Rekomendasi**: Saran pembuangan sampah yang tepat
+  - **Keterangan**: Sampah yang dipilih termasuk Organik atau Non-Organik 
 
 ---
 
@@ -191,8 +190,10 @@ Pada halaman ini pengguna akan diperkenalkan secara singkat tentang EcoScan, mul
 
 ##  Anggota Kelompok
 
-- **[Nama Anda]** - nim - *Developer* 
-- **[Nama Anggota 2]** - nim - *Designer* 
+- **Ammar Nabil Fauzan** - 2309106006 - *Ketua, Penyusun Konsep, PM* 
+- **Muhammad Arya Fayyadh Razan** - 2309106010 - *Anggota, Modifikasi API, Perbaikan Aplikasi*
+- **Zhorif Fachdiat** - 2309106014 - *Anggota, Melengkapi Fitur Mobile, Desain Aplikasi*
+- **Faizul Anwar Wandi** - 2309106024 - *Anggota, Mencari Dataset, Merancang Model Kecerdasarn Buatan*
 
 ---
 
