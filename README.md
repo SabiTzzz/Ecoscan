@@ -134,7 +134,7 @@ flutter run
 
 ### 1. **Halaman Pengenalan Aplkasi**
 
-
+Pada halaman ini pengguna akan diperkenalkan secara singkat tentang EcoScan, mulai dari tujuan pembuatan aplikasi, cara pakai, dan tips saat memilih ataupun melakukan pengambilan gambar 
 
 ### 2. **Halaman Utama**
 
