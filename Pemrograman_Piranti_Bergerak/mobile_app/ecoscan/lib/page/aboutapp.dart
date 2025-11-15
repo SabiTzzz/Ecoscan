@@ -43,10 +43,8 @@ class AboutAppPage extends StatelessWidget {
                     'EcoScan adalah aplikasi sederhana yang membantu pengguna '
                     'mengklasifikasikan sampah menjadi kategori organik dan non-organik menggunakan '
                     'kamera perangkat atau gambar dari galeri. Aplikasi ini dirancang untuk memudahkan '
-                    'pembuangan sampah dan meningkatkan kesadaran lingkungan. Data gambar diproses secara '
-                    'lokal di perangkat (atau sesuai model yang diintegrasikan), dan aplikasi tidak mengirimkan '
-                    'gambar ke server tanpa persetujuan pengguna. Harap gunakan aplikasi ini sebagai panduan; '
-                    'hasil klasifikasi tidak menggantikan kebijakan atau aturan pengelolaan sampah setempat.',
+                    'pembuangan sampah dan meningkatkan kesadaran lingkungan. Harap gunakan aplikasi ini sebagai panduan '
+                    'hasil klasifikasi namun tidak menggantikan kebijakan atau aturan pengelolaan sampah setempat.',
                     textAlign: TextAlign.justify,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 16),
                   ),
