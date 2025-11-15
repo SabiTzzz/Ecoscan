@@ -36,13 +36,9 @@ class _EcoScanAppState extends State<EcoScanApp> {
 
   @override
   Widget build(BuildContext context) {
-    // Use a friendly green palette and explicit surface/background colors
-    // Light: white surface with a pleasant green primary
-    // Dark: black surface with a brighter green accent for contrast
-  // Brighter greens chosen for stronger, friendlier accent
-  const Color lightGreen = Color(0xFF4CAF50); // Material Green 500 (brighter)
-  // Use user-requested darker green for dark mode
-  const Color darkGreen = Color(0xFF2F6542); // #2f6542
+  const Color lightGreen = Color(0xFF4CAF50);
+  
+  const Color darkGreen = Color(0xFF2F6542);
 
     final lightColorScheme = ColorScheme.fromSeed(
       seedColor: lightGreen,
@@ -63,17 +59,15 @@ class _EcoScanAppState extends State<EcoScanApp> {
       brightness: Brightness.dark,
     ).copyWith(
       primary: darkGreen,
-      // ensure text/icons on primary are light for contrast
       onPrimary: Colors.white,
       primaryContainer: darkGreen.withOpacity(0.24),
-  // use the user-provided near-black background (updated)
-  surface: const Color(0xFF172B23), // #172b23
-  background: const Color(0xFF172B23),
+      surface: const Color(0xFF172B23),
+      background: const Color(0xFF172B23),
       onSurface: Colors.white,
       onBackground: Colors.white,
       secondary: const Color(0xFF388E3C),
     );
-    // pilih halaman home berdasarkan status inisialisasi dan flag intro
+    
     Widget homeWidget;
     if (!_initialized) {
       homeWidget = Scaffold(
@@ -138,7 +132,6 @@ class _EcoScanAppState extends State<EcoScanApp> {
         });
       }
     } catch (e) {
-      // jika gagal membaca prefs, tetap lanjut ke home
       if (mounted) {
         setState(() {
           _showIntro = false;
@@ -266,7 +259,6 @@ class EcoScanHome extends StatelessWidget {
                       ),
                       const SizedBox(height: 12),
 
-                      // Grid of bad examples
                       Row(
                         children: [
                           Expanded(
@@ -420,10 +412,8 @@ class _GuideCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Header title
           Center(child: title),
           const SizedBox(height: 10),
-          // Inner white panel
           Container(
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.surface,
@@ -458,90 +448,17 @@ class _PreviewArea extends StatelessWidget {
   }
 }
 
-class _DividerShort extends StatelessWidget {
-  const _DividerShort();
 
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      child: Container(
-        width: 140,
-        height: 6,
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.onSurface,
-          borderRadius: BorderRadius.circular(4),
-        ),
-      ),
-    );
-  }
-}
-
-class _StepsGrid extends StatelessWidget {
-  const _StepsGrid();
-
-  @override
-  Widget build(BuildContext context) {
-    final item = Column(
-      children: [
-        Container(
-          height: 90,
-          decoration: BoxDecoration(
-            color: const Color(0xFFE7E7E7),
-            borderRadius: BorderRadius.circular(6),
-          ),
-        ),
-        const SizedBox(height: 8),
-        Container(
-          height: 6,
-          width: 90,
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.onSurface,
-            borderRadius: BorderRadius.circular(4),
-          ),
-        ),
-      ],
-    );
-
-    return Column(
-      children: [
-        Row(
-          children: [
-            Expanded(child: item),
-            const SizedBox(width: 10),
-            Expanded(child: item),
-          ],
-        ),
-        const SizedBox(height: 12),
-        Row(
-          children: [
-            Expanded(child: item),
-            const SizedBox(width: 10),
-            Expanded(child: item),
-          ],
-        ),
-      ],
-    );
-  }
-}
 
 class EcoBottomSheet extends StatelessWidget {
   EcoBottomSheet({super.key});
-
-  // MODIFIKASI: Logika _pickImage diganti total
   Future<void> _pickImage(BuildContext context, ImageSource source) async {
-    // 1. Dapatkan provider dan navigator context
     final provider = Provider.of<PredictionProvider>(context, listen: false);
     final navigator = Navigator.of(context);
-
-    // 2. Panggil fungsi pickImage dari provider
     await provider.pickImage(source);
 
-    // 3. Tutup bottom sheet terlebih dahulu
     if (context.mounted) {
-      navigator.pop(); // Tutup bottom sheet
-
-      // Jika ada gambar, langsung navigasi ke halaman hasil.
-      // HasilDeteksi akan menjalankan prediksi dan menampilkan loading.
+      navigator.pop(); 
       if (provider.imageFile != null) {
         navigator.push(
           MaterialPageRoute(builder: (context) => const HasilDeteksi()),
@@ -563,7 +480,7 @@ class EcoBottomSheet extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Judul
+
           Text(
             'Pilih Gambar Sampah',
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -572,7 +489,7 @@ class EcoBottomSheet extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 30),
-          // Tombol Row
+
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
