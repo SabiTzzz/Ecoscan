@@ -19,15 +19,18 @@
 
 ---
 
-## 📋 Daftar Isi
+##  Daftar Isi
 
-- [Prasyarat](#-prasyarat)
-- [Instalasi API Backend](#-instalasi-api-backend)
-- [Instalasi Aplikasi Mobile](#-instalasi-aplikasi-mobile)
+- [Daftar Isi](#-daftar-isi)
+- [Tentang Aplikasi](#-tentang-aplikasi)
+- [Fitur Utama](#-fitur-utama)
+- [Kebutuhan](#-kebutuhan)
+- [Konfigurasi API](#-konfigurasi-api)
+- [Konfigurasi Aplikasi Mobile](#-konfigurasi-aplikasi-mobile)
 - [Cara Menggunakan Aplikasi](#-cara-menggunakan-aplikasi)
-- [Teknologi yang Digunakan](#-teknologi-yang-digunakan)
-- [Kontribusi](#-kontribusi)
-- [Lisensi](#-lisensi)
+- [Aplikasi Ecoscan](#-aplikasi-ecoscan)
+- [Anggota Kelompok](#-anggota-kelompok)
+- [Dataset](#-dataset)
 
 ---
 
@@ -169,7 +172,9 @@ flutter run
 
 ---
 
-## Ecoscan
+## Aplikasi Ecoscan
+
+- Link aplikasi: google drive
 
 ### API
 - **Django** - API framework
@@ -197,7 +202,6 @@ flutter run
 
 ## Dataset
 
-- Dataset sampah dari [Sumber Dataset]
-- Link google drive: 
+- Dataset sampah dari [kaggle]
 
 ---
