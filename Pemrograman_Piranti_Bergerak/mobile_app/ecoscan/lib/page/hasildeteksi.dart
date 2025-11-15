@@ -15,7 +15,6 @@ class _HasilDeteksiState extends State<HasilDeteksi> {
   @override
   void initState() {
     super.initState();
-    // Run prediction after first frame so Provider is available
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _runPrediction();
     });
@@ -23,7 +22,6 @@ class _HasilDeteksiState extends State<HasilDeteksi> {
 
   Future<void> _runPrediction() async {
     final provider = Provider.of<PredictionProvider>(context, listen: false);
-    // If there's no image, nothing to do
     if (provider.imageFile == null) {
       setState(() {
         _isLoading = false;
@@ -46,10 +44,9 @@ class _HasilDeteksiState extends State<HasilDeteksi> {
     String getPredictionType() {
       if (provider.predictionMessage != null) {
         final message = provider.predictionMessage!.toLowerCase();
-        if (message.contains('organik') && !message.contains('non')) {
+        if (message == 'organik') {
           return 'ORGANIK';
-        } else if (message.contains('non-organik') ||
-            message.contains('non organik')) {
+        } else if (message == 'non-organik') {
           return 'NON-ORGANIK';
         }
       }
@@ -76,7 +73,6 @@ class _HasilDeteksiState extends State<HasilDeteksi> {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          // Remove the top-left back button per request
           automaticallyImplyLeading: false,
         ),
         body: SafeArea(
@@ -85,124 +81,112 @@ class _HasilDeteksiState extends State<HasilDeteksi> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-              // Judul
-              Text(
-                getPredictionType(),
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                  color: cs.onSurface,
-                  letterSpacing: 2,
-                ),
-              ),
-              const SizedBox(height: 32),
-
-              // Gambar Container
-              Container(
-                width: double.infinity,
-                height: 280,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: cs.outline.withOpacity(0.3),
-                    width: 2,
+                Text(
+                  getPredictionType(),
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: cs.onSurface,
+                    letterSpacing: 2,
                   ),
                 ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: provider.imageFile != null
-                      ? Image.file(
-                          provider.imageFile!,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Container(
-                              color: cs.surfaceVariant,
-                              child: Center(
-                                child: Icon(
-                                  Icons.image_outlined,
-                                  size: 80,
-                                  color: cs.onSurfaceVariant,
+                const SizedBox(height: 32),
+                Container(
+                  width: double.infinity,
+                  height: 280,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: cs.outline.withOpacity(0.3),
+                      width: 2,
+                    ),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: provider.imageFile != null
+                        ? Image.file(
+                            provider.imageFile!,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Container(
+                                color: cs.surfaceVariant,
+                                child: Center(
+                                  child: Icon(
+                                    Icons.image_outlined,
+                                    size: 80,
+                                    color: cs.onSurfaceVariant,
+                                  ),
                                 ),
+                              );
+                            },
+                          )
+                        : Container(
+                            color: cs.surfaceVariant,
+                            child: Center(
+                              child: Icon(
+                                Icons.image_outlined,
+                                size: 80,
+                                color: cs.onSurfaceVariant,
                               ),
-                            );
-                          },
-                        )
-                      : Container(
-                          color: cs.surfaceVariant,
-                          child: Center(
-                            child: Icon(
-                              Icons.image_outlined,
-                              size: 80,
-                              color: cs.onSurfaceVariant,
                             ),
                           ),
-                        ),
-                ),
-              ),
-
-              const SizedBox(height: 40),
-
-              // Deskripsi
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Text(
-                  getDescription(),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 15,
-                    height: 1.5,
-                    color: cs.onSurface.withOpacity(0.8),
                   ),
                 ),
-              ),
-
-              const Spacer(),
-
-              // Jika masih loading, tampilkan progress indicator
-              if (_isLoading) ...[
-                const SizedBox(height: 8),
-                const CircularProgressIndicator(),
-                const SizedBox(height: 20),
-              ],
-
-              // Tombol Kembali (disabled saat loading)
-              SizedBox(
-                width: 160,
-                child: FilledButton(
-                  onPressed: _isLoading
-                      ? null
-                      : () {
-                          provider.clear();
-                          Navigator.pop(context);
-                        },
-                  style: FilledButton.styleFrom(
-                    backgroundColor: _isLoading
-                        ? cs.onSurface.withOpacity(0.12)
-                        : cs.primary,
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
+                const SizedBox(height: 40),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: Text(
-                    'Kembali',
+                    getDescription(),
+                    textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: _isLoading ? cs.onSurface.withOpacity(0.38) : cs.onPrimary,
+                      fontSize: 15,
+                      height: 1.5,
+                      color: cs.onSurface.withOpacity(0.8),
                     ),
                   ),
                 ),
-              ),
-
-              const SizedBox(height: 24),
-            ],
+                const Spacer(),
+                if (_isLoading) ...[
+                  const SizedBox(height: 8),
+                  const CircularProgressIndicator(),
+                  const SizedBox(height: 20),
+                ],
+                SizedBox(
+                  width: 160,
+                  child: FilledButton(
+                    onPressed: _isLoading
+                        ? null
+                        : () {
+                            provider.clear();
+                            Navigator.pop(context);
+                          },
+                    style: FilledButton.styleFrom(
+                      backgroundColor: _isLoading
+                          ? cs.onSurface.withOpacity(0.12)
+                          : cs.primary,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: Text(
+                      'Kembali',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: _isLoading
+                            ? cs.onSurface.withOpacity(0.38)
+                            : cs.onPrimary,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 24),
+              ],
+            ),
           ),
         ),
       ),
-    
-      )
     );
-    
   }
 }

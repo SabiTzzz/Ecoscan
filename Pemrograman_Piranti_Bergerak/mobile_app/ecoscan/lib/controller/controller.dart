@@ -10,7 +10,6 @@ class PredictionProvider with ChangeNotifier {
   bool isSuccess = false;
   final ImagePicker _picker = ImagePicker();
 
-  // Fungsi untuk mengambil gambar dari galeri atau kamera dengan error handling
   Future<void> pickImage(ImageSource source) async {
     try {
       final pickedFile = await _picker.pickImage(source: source);
@@ -18,7 +17,6 @@ class PredictionProvider with ChangeNotifier {
         imageFile = File(pickedFile.path);
         notifyListeners();
       } else {
-        // User membatalkan
         imageFile = null;
         predictionMessage = 'Pengambilan gambar dibatalkan.';
         notifyListeners();
@@ -30,7 +28,6 @@ class PredictionProvider with ChangeNotifier {
     }
   }
 
-  // Fungsi untuk mengirim gambar ke API dan mendapatkan prediksi dengan error handling
   Future<bool> predictImage() async {
     if (imageFile == null) {
       predictionMessage = 'Tidak ada gambar yang dipilih.';
@@ -39,7 +36,6 @@ class PredictionProvider with ChangeNotifier {
       return false;
     }
 
-    // Reset status sebelum prediksi
     isSuccess = false;
     predictionMessage = 'Memproses gambar...';
     notifyListeners();
@@ -50,10 +46,8 @@ class PredictionProvider with ChangeNotifier {
         'POST',
         url,
       )..files.add(await http.MultipartFile.fromPath('image', imageFile!.path));
-      // (Optional) Tambahkan header jika API memerlukannya
       request.headers.addAll({
         'Content-Type': 'multipart/form-data',
-        // 'Authorization': 'Bearer YOUR_TOKEN', // Tambahkan jika perlu
       });
 
       final response = await request.send();
@@ -62,21 +56,18 @@ class PredictionProvider with ChangeNotifier {
         final data = jsonDecode(responseData);
         if (data['prediction'] != null &&
             data['prediction'].toString().isNotEmpty) {
-          // prediction: "organik" atau "non-organik"
           final prediction = data['prediction'].toString();
-          predictionMessage =
-              'Jenis sampah: ${prediction[0].toUpperCase()}${prediction.substring(1)}';
-          isSuccess = true; // Prediksi berhasil
+          predictionMessage = prediction; 
+          isSuccess = true;
           notifyListeners();
           return true;
         } else {
-          predictionMessage = 'Prediction failed';
+          predictionMessage = 'Prediksi gagal: Response tidak valid.';
           isSuccess = false;
           notifyListeners();
           return false;
         }
       } else {
-        // Jika error, tampilkan pesan error
         predictionMessage = 'Error ${response.statusCode}: $responseData';
         isSuccess = false;
         notifyListeners();
@@ -105,7 +96,6 @@ class PredictionProvider with ChangeNotifier {
     }
   }
 
-  // Fungsi untuk menghapus gambar dan prediksi
   void clear() {
     imageFile = null;
     predictionMessage = null;

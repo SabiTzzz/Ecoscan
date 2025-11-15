@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
-/// A simple wrapper around `IntroductionScreen` that calls [onFinish]
-/// when the user completes the introduction.
 class IntroScreenPage extends StatelessWidget {
   final VoidCallback onFinish;
   const IntroScreenPage({Key? key, required this.onFinish}) : super(key: key);
@@ -22,7 +20,6 @@ class IntroScreenPage extends StatelessWidget {
               assetPath,
               fit: BoxFit.contain,
               errorBuilder: (context, error, stackTrace) {
-                // Fallback to icon if asset missing
                 return Center(
                   child: Icon(icon, size: size * 0.5, color: primary),
                 );
@@ -86,7 +83,7 @@ class IntroScreenPage extends StatelessWidget {
     return IntroductionScreen(
       pages: pages,
       onDone: onFinish,
-      onSkip: onFinish, // You can override onSkip callback
+      onSkip: onFinish,
       showSkipButton: true,
       skip: const Text('Lewati'),
       next: const Icon(Icons.arrow_forward),

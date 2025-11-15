@@ -8,7 +8,6 @@ class AboutAppPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
-    // Gunakan flag isDarkMode yang dikirim dari main.dart
     final iconColor = isDarkMode ? Colors.white : Colors.black;
 
     return Scaffold(
@@ -28,7 +27,6 @@ class AboutAppPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Judul utama di bawah AppBar
                   Text(
                     'Tentang Aplikasi',
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
@@ -37,8 +35,6 @@ class AboutAppPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-
-                  // Deskripsi aplikasi (justify)
                   Text(
                     'EcoScan adalah aplikasi sederhana yang membantu pengguna '
                     'mengklasifikasikan sampah menjadi kategori organik dan non-organik menggunakan '
@@ -48,10 +44,7 @@ class AboutAppPage extends StatelessWidget {
                     textAlign: TextAlign.justify,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 16),
                   ),
-
                   const SizedBox(height: 24),
-
-                  // Logo aplikasi (pakai asset jika ada, fallback FlutterLogo)
                   Container(
                     width: 140,
                     height: 140,
@@ -73,16 +66,12 @@ class AboutAppPage extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 32),
-
-                  // Optional: versi atau hak cipta kecil di bawah
                   Text(
                     '© ${DateTime.now().year} EcoScan',
                     style: Theme.of(context).textTheme.labelSmall,
                   ),
                   const SizedBox(height: 24),
-                  // Tombol Kembali di bawah mirip HasilDeteksi
                   SizedBox(
                     width: 160,
                     child: FilledButton(
