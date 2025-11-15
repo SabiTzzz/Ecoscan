@@ -146,41 +146,36 @@ class _HasilDeteksiState extends State<HasilDeteksi> {
                   ),
                 ),
                 const Spacer(),
-                if (_isLoading) ...[
-                  const SizedBox(height: 8),
-                  const CircularProgressIndicator(),
-                  const SizedBox(height: 20),
-                ],
-                SizedBox(
-                  width: 160,
-                  child: FilledButton(
-                    onPressed: _isLoading
-                        ? null
-                        : () {
-                            provider.clear();
-                            Navigator.pop(context);
-                          },
-                    style: FilledButton.styleFrom(
-                      backgroundColor: _isLoading
-                          ? cs.onSurface.withOpacity(0.12)
-                          : cs.primary,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                  if (_isLoading) ...[
+                    const SizedBox(height: 8),
+                    const CircularProgressIndicator(),
+                    const SizedBox(height: 20),
+                  ] else ...[
+                    SizedBox(
+                      width: 160,
+                      child: FilledButton(
+                        onPressed: () {
+                          provider.clear();
+                          Navigator.pop(context);
+                        },
+                        style: FilledButton.styleFrom(
+                          backgroundColor: cs.primaryContainer.withOpacity(0.8),
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        child: Text(
+                          'Kembali',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: cs.onPrimary,
+                          ),
+                        ),
                       ),
                     ),
-                    child: Text(
-                      'Kembali',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: _isLoading
-                            ? cs.onSurface.withOpacity(0.38)
-                            : cs.onPrimary,
-                      ),
-                    ),
-                  ),
-                ),
+                  ],
                 const SizedBox(height: 24),
               ],
             ),
