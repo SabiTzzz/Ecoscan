@@ -94,7 +94,7 @@ class _EcoScanAppState extends State<EcoScanApp> {
         useMaterial3: true,
         colorScheme: lightColorScheme,
         textTheme: const TextTheme(
-          headlineMedium: TextStyle(fontSize: 50, fontWeight: FontWeight.w600),
+          headlineMedium: TextStyle(fontSize: 60, fontWeight: FontWeight.w600),
           bodyMedium: TextStyle(fontSize: 12.5, height: 0),
           labelLarge: TextStyle(
             fontWeight: FontWeight.w600,
@@ -106,7 +106,7 @@ class _EcoScanAppState extends State<EcoScanApp> {
         useMaterial3: true,
         colorScheme: darkColorScheme,
         textTheme: const TextTheme(
-          headlineMedium: TextStyle(fontSize: 50, fontWeight: FontWeight.w600),
+          headlineMedium: TextStyle(fontSize: 60, fontWeight: FontWeight.w600),
           bodyMedium: TextStyle(fontSize: 12.5, height: 0),
           labelLarge: TextStyle(fontWeight: FontWeight.w600),
         ),
@@ -244,7 +244,7 @@ class EcoScanHome extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8),
                         child: Image.asset(
                           'assets/images/benar.png',
-                          height: 185,
+                          height: 165,
                           width: double.infinity,
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) => _PreviewArea(),
@@ -270,7 +270,7 @@ class EcoScanHome extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(8),
                                       child: Image.asset(
                                         'assets/images/salah1.png',
-                                        height: 90,
+                                        height: 80,
                                         width: double.infinity,
                                         fit: BoxFit.cover,
                                         errorBuilder: (context, error, stackTrace) => Container(height: 80, color: Colors.grey.shade200),
@@ -294,7 +294,7 @@ class EcoScanHome extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(8),
                                       child: Image.asset(
                                         'assets/images/salah2.png',
-                                        height: 90,
+                                        height: 80,
                                         width: double.infinity,
                                         fit: BoxFit.cover,
                                         errorBuilder: (context, error, stackTrace) => Container(height: 80, color: Colors.grey.shade200),
@@ -322,7 +322,7 @@ class EcoScanHome extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(8),
                                       child: Image.asset(
                                         'assets/images/salah3.png',
-                                        height: 90,
+                                        height: 80,
                                         width: double.infinity,
                                         fit: BoxFit.cover,
                                         errorBuilder: (context, error, stackTrace) => Container(height: 80, color: Colors.grey.shade200),
@@ -346,7 +346,7 @@ class EcoScanHome extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(8),
                                       child: Image.asset(
                                         'assets/images/salah4.png',
-                                        height: 90,
+                                        height: 80,
                                         width: double.infinity,
                                         fit: BoxFit.cover,
                                         errorBuilder: (context, error, stackTrace) => Container(height: 80, color: Colors.grey.shade200),
