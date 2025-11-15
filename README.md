@@ -132,13 +132,17 @@ flutter run
 
 ##  Cara Menggunakan Aplikasi
 
-### 1. **Halaman Utama**
+### 1. **Halaman Pengenalan Aplkasi**
+
+Pada halaman ini pengguna akan diperkenalkan secara singkat tentang EcoScan, mulai dari tujuan pembuatan aplikasi, cara pakai, dan tips saat memilih ataupun melakukan pengambilan gambar 
+
+### 2. **Halaman Utama**
 
 <img src="screenshots/home_screen.png" width="250" alt="Home Screen">
 
-- Setelah membuka aplikasi, Anda akan melihat halaman utama dengan dua opsi utama
+Halaman ini akan menampilkan fitur utama untuk memilih gambar yang akan diklasifikasi, kemudian ada panduan dalam pengambilan/pemilihan gambar yang benar, dan beberapa fitur sederhana seperti ganti tema dan penjelasan lebih lengkap tentang aplikasi EcoScan
 
-### 2. **Ambil Foto dengan Kamera**
+### 3. **Ambil Foto dengan Kamera**
 
 <img src="screenshots/camera_screen.png" width="250" alt="Camera Screen">
 
@@ -147,7 +151,7 @@ flutter run
 3. Tekan tombol capture untuk mengambil foto
 4. Konfirmasi foto atau ambil ulang jika diperlukan
 
-### 3. **Upload dari Galeri**
+### 4. **Upload dari Galeri**
 
 <img src="screenshots/gallery_screen.png" width="250" alt="Gallery Screen">
 
@@ -155,20 +159,13 @@ flutter run
 2. Pilih foto sampah dari galeri perangkat Anda
 3. Konfirmasi pilihan foto
 
-### 4. **Hasil Klasifikasi**
+### 5. **Hasil Klasifikasi**
 
 <img src="screenshots/result_screen.png" width="250" alt="Result Screen">
 
 - Aplikasi akan menampilkan hasil klasifikasi:
   - **Kategori**: Organik atau Non-Organik
-  - **Tingkat Kepercayaan**: Persentase akurasi klasifikasi
-  - **Rekomendasi**: Saran pembuangan sampah yang tepat
-
-### 5. **Fitur Tambahan**
-
-- **Riwayat**: Lihat riwayat klasifikasi sebelumnya *(opsional)*
-- **Edukasi**: Pelajari lebih lanjut tentang jenis-jenis sampah *(opsional)*
-- **Pengaturan**: Sesuaikan preferensi aplikasi *(opsional)*
+  - **Keterangan**: Sampah yang dipilih termasuk Organik atau Non-Organik 
 
 ---
 
@@ -193,8 +190,10 @@ flutter run
 
 ##  Anggota Kelompok
 
-- **[Nama Anda]** - nim - *Developer* 
-- **[Nama Anggota 2]** - nim - *Designer* 
+- **Ammar Nabil Fauzan** - 2309106006 - *Ketua, Penyusun Konsep, PM* 
+- **Muhammad Arya Fayyadh Razan** - 2309106010 - *Anggota, Modifikasi API, Perbaikan Aplikasi*
+- **Zhorif Fachdiat** - 2309106014 - *Anggota, Melengkapi Fitur Mobile, Desain Aplikasi*
+- **Faizul Anwar Wandi** - 2309106024 - *Anggota, Mencari Dataset, Merancang Model Kecerdasarn Buatan*
 
 ---
 
