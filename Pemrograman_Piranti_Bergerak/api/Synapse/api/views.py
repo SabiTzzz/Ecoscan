@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from api.model.inference import Model
 
-model = Model.from_path('api/model/garden/waste_classifier.tflite')
+model = Model.from_path('api/model/garden/waste_classifier_model.tflite')
 
 @csrf_exempt
 def predict(request):
