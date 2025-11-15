@@ -244,7 +244,7 @@ class EcoScanHome extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8),
                         child: Image.asset(
                           'assets/images/benar.png',
-                          height: 185,
+                          height: 165,
                           width: double.infinity,
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) => _PreviewArea(),
