@@ -132,13 +132,17 @@ flutter run
 
 ##  Cara Menggunakan Aplikasi
 
-### 1. **Halaman Utama**
+### 1. **Halaman Pengenalan Aplkasi**
+
+
+
+### 2. **Halaman Utama**
 
 <img src="screenshots/home_screen.png" width="250" alt="Home Screen">
 
 - Setelah membuka aplikasi, Anda akan melihat halaman utama dengan dua opsi utama
 
-### 2. **Ambil Foto dengan Kamera**
+### 3. **Ambil Foto dengan Kamera**
 
 <img src="screenshots/camera_screen.png" width="250" alt="Camera Screen">
 
@@ -147,7 +151,7 @@ flutter run
 3. Tekan tombol capture untuk mengambil foto
 4. Konfirmasi foto atau ambil ulang jika diperlukan
 
-### 3. **Upload dari Galeri**
+### 4. **Upload dari Galeri**
 
 <img src="screenshots/gallery_screen.png" width="250" alt="Gallery Screen">
 
@@ -155,7 +159,7 @@ flutter run
 2. Pilih foto sampah dari galeri perangkat Anda
 3. Konfirmasi pilihan foto
 
-### 4. **Hasil Klasifikasi**
+### 5. **Hasil Klasifikasi**
 
 <img src="screenshots/result_screen.png" width="250" alt="Result Screen">
 
@@ -163,12 +167,6 @@ flutter run
   - **Kategori**: Organik atau Non-Organik
   - **Tingkat Kepercayaan**: Persentase akurasi klasifikasi
   - **Rekomendasi**: Saran pembuangan sampah yang tepat
-
-### 5. **Fitur Tambahan**
-
-- **Riwayat**: Lihat riwayat klasifikasi sebelumnya *(opsional)*
-- **Edukasi**: Pelajari lebih lanjut tentang jenis-jenis sampah *(opsional)*
-- **Pengaturan**: Sesuaikan preferensi aplikasi *(opsional)*
 
 ---
 
